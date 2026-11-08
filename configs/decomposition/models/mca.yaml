@@ -1,0 +1,10 @@
+name: mca
+n_atoms: 5
+n_iterations: 50
+inner_ista_steps: 5
+n_frequencies: 20
+n_phases: 8
+n_centers: 20
+n_widths: 5
+poly_degree: 3
+stop_ratio: 0.01

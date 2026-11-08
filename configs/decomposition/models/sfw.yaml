@@ -1,0 +1,12 @@
+name: sfw
+n_atoms: 5
+atom_kernel: fourier
+lam: -1.0
+lam_ratio: 0.1
+grid_oversampling: 4
+n_centers: 16
+n_widths: 6
+slide_epochs: 300
+slide_lr: 0.005
+debias: true
+include_trend: true

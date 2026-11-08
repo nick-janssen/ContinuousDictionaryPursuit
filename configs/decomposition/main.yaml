@@ -1,0 +1,9 @@
+model: configs/decomposition/models/cdp.yaml
+dataset:
+  name: multiple_sines
+  variate: 0
+  train_ratio: 0.8
+  noise_std: 0.1
+root_dir: results
+run_name: default
+seed: 0

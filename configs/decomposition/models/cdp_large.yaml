@@ -1,0 +1,14 @@
+name: cdp
+n_atoms: 5
+scout_batch_size: 50
+scout_epochs: 50
+num_global_optims: 5
+global_epochs: 100
+atom_types:
+- SineAtom
+- SawtoothAtom
+- SquareAtom
+- LinearAtom
+- ExponentialAtom
+- GaussianAtom
+- StepAtom

@@ -1,0 +1,7 @@
+name: analysis_ksvd
+n_atoms: 5
+patch_len: 48
+n_rows: -1
+n_iterations: 10
+stride: 4
+seed: 0

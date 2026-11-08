@@ -1,0 +1,15 @@
+name: cdp_modulated
+n_atoms: 5
+atom_types:
+  - SineAtom
+  - SawtoothAtom
+  - SquareAtom
+  - LinearAtom
+  - ExponentialAtom
+  - GaussianAtom
+  - StepAtom
+  - ModulatedAtom
+scout_batch_size: 10
+scout_epochs: 5
+num_global_optims: 5
+global_epochs: 100

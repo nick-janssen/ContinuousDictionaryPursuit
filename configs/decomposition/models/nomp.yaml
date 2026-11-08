@@ -1,0 +1,6 @@
+name: nomp
+n_atoms: 5
+grid_oversampling: 4
+newton_steps: 3
+cyclic_rounds: 3
+include_trend: true

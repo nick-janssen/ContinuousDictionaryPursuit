@@ -1,0 +1,7 @@
+name: nbeats
+n_atoms: 5
+poly_degree: 2
+input_window: 96
+forecast_horizon: 96
+epochs: 200
+lr: 0.001

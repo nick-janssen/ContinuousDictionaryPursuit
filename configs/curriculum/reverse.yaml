@@ -1,0 +1,10 @@
+model: configs/curriculum/models/s4d.yaml
+atoms_csv: results/multiple_sines/cdp/default/n_atoms_5/individual_atom_reconstructions_seed_0.csv
+out_dir: results/curriculum
+seed: 0
+total_iterations: 1000
+curriculum_smoothness: 0.2
+ratio_real_data: 0.1
+reverse_atoms: true
+smoothing: false
+lr: 0.001
