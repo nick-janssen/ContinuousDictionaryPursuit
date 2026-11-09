@@ -8,6 +8,7 @@ time through sigmoid-shaped weights. Supports reversed component order and a
 decomposition-free low-pass smoothing curriculum as control conditions.
 """
 import os
+import warnings
 
 import pandas as pd
 import torch
@@ -80,8 +81,11 @@ class AtomCurriculumDataset(IterableDataset):
         if k <= 1:
             return self.real_data_train
         kernel = torch.ones(1, 1, k, device=self.device) / k
-        return torch.conv1d(self.real_data_train.unsqueeze(0).unsqueeze(0),
-                            weight=kernel, padding="same").squeeze()
+        with warnings.catch_warnings():
+            # padding="same" with an even k warns that it pads asymmetrically.
+            warnings.filterwarnings("ignore", message=".*padding='same'.*")
+            return torch.conv1d(self.real_data_train.unsqueeze(0).unsqueeze(0),
+                                weight=kernel, padding="same").squeeze()
 
     def __iter__(self):
         while self.current_iteration < self.total_iterations:

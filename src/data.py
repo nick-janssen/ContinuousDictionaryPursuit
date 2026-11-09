@@ -2,7 +2,7 @@ import logging
 import os
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from src.config import StrictConfig
 
 import numpy as np
@@ -32,6 +32,10 @@ REAL_DATASETS = {
     "weather": ("weather", 21),
 }
 
+# Synthetic signals; they have a single variate.
+SYNTHETIC_DATASETS = ("simple_trend", "simple_sine", "simple_square", "simple_saw",
+                      "multiple_sines", "damped_sine", "non_stationarity", "complex_signal")
+
 # Variates follow the column order of the iTransformer dataset archive (see README).
 # The header-less .txt files of multivariate-time-series-data order some columns
 # differently; this maps a variate to its column there.
@@ -45,6 +49,20 @@ class DatasetConfig(StrictConfig):
     variate: int = Field(0, ge=0, description="Index of the variate (column) to use as target signal.")
     train_ratio: float = Field(0.8, ge=0.0, le=1.0, description="Ratio of data to use for training.")
     noise_std: float = Field(0.1, ge=0.0, description="Standard deviation of noise to add to the target signal.")
+
+    @model_validator(mode="after")
+    def check_name_and_variate(self):
+        if self.name in REAL_DATASETS:
+            n_variates = REAL_DATASETS[self.name][1]
+        elif self.name in SYNTHETIC_DATASETS:
+            n_variates = 1
+        else:
+            raise ValueError(f"unknown dataset '{self.name}'. Known datasets: "
+                             f"{sorted(REAL_DATASETS) + list(SYNTHETIC_DATASETS)}")
+        if self.variate >= n_variates:
+            raise ValueError(f"variate {self.variate} is out of range, '{self.name}' "
+                             f"has {n_variates} variate(s) (0 to {n_variates - 1})")
+        return self
 
 def load_dataset(config: DatasetConfig):
     if config.name in REAL_DATASETS:

@@ -37,12 +37,12 @@ reconstructions, the fitted atom parameters as JSON, and an overview plot.
 
 ```python
 import torch
-from src.models.cdp import ContinuousDictionaryPursuit, SineAtom, LinearAtom, GaussianAtom
+from src.models.cdp import ContinuousDictionaryPursuit, SineAtom, LinearAtom, StepAtom
 
 t = torch.linspace(0, 1, 1000)
-signal = 1.5 * torch.sin(2 * torch.pi * 5.8 * t) + 0.8 * t + torch.exp(-((t - 0.6) / 0.05) ** 2)
+signal = 1.5 * torch.sin(2 * torch.pi * 5.8 * t) + 2.0 * t + 1.0 * (t > 0.6).float()
 
-cdp = ContinuousDictionaryPursuit(experiment_dir=None, atom_types=[SineAtom, LinearAtom, GaussianAtom])
+cdp = ContinuousDictionaryPursuit(experiment_dir=None, atom_types=[SineAtom, LinearAtom, StepAtom])
 cdp.fit(t, signal, n_atoms=3)
 print(cdp)                                   # one row per atom with its fitted parameters
 components = [atom(t.to(cdp.device), test=True) for atom in cdp.atoms]

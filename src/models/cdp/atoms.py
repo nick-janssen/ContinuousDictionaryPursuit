@@ -313,6 +313,9 @@ class ExponentialAtom(BaseAtom):
         
         mask = self.rate < 0
 
+        # Note: -log(abs_min_rate * |rate|) only vanishes for |rate| >= 1.5 * T,
+        # i.e. the effective lower bound on |rate| is 1 / abs_min_rate rather
+        # than abs_min_rate.
         rate_penalty_neg = torch.relu(-torch.log(-abs_min_rate * self.rate))
         rate_penalty_pos = torch.relu(-torch.log(abs_min_rate * self.rate))
         loss = loss + torch.where(mask, rate_penalty_neg, rate_penalty_pos)

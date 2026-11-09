@@ -35,7 +35,7 @@ class ContinuousDictionaryPursuit(nn.Module):
         if self.plot_visualizations:
             os.makedirs(f"{self.experiment_dir}/visualizations", exist_ok=True)
         
-        self.atom_types = atom_types if atom_types is not None else [
+        self.atom_types = list(atom_types) if atom_types is not None else [
             SineAtom,
         ]
 

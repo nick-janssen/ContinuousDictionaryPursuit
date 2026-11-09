@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 # Config Class for CDP Model
 class CDPModelConfig(StrictConfig):
-    name: Literal["cdp", "cdp_modulated"] = "cdp"
+    name: Literal["cdp", "cdp_large", "cdp_sine_only", "cdp_modulated"] = "cdp"
     n_atoms: int = Field(
         default=1, 
         ge=1, 

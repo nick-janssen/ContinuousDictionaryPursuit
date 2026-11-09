@@ -1,4 +1,4 @@
-name: cdp
+name: cdp_large
 n_atoms: 5
 scout_batch_size: 50
 scout_epochs: 50

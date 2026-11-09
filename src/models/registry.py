@@ -39,6 +39,8 @@ ModelConfigRegistry = Annotated[
 
 _MODELS = {
     "cdp": CDPModel,
+    "cdp_large": CDPModel,
+    "cdp_sine_only": CDPModel,
     "cdp_modulated": CDPModel,
     "mstl": MSTLModel,
     "ssa": SSAModel,

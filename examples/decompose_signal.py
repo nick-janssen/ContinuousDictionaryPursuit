@@ -11,9 +11,9 @@ from matplotlib import pyplot as plt
 
 from src.models.cdp import (
     ContinuousDictionaryPursuit,
-    GaussianAtom,
     LinearAtom,
     SineAtom,
+    StepAtom,
     load_atoms_from_json,
 )
 
@@ -21,14 +21,14 @@ OUT_DIR = "results/examples"
 
 torch.manual_seed(0)
 
-# A sine at an off-grid frequency, a linear trend and a Gaussian transient, plus noise.
+# A sine at an off-grid frequency, a linear trend and a level shift at t = 0.6, plus noise.
 t = torch.linspace(0, 1, 1000)
 signal = (1.5 * torch.sin(2 * torch.pi * 5.8 * t)
-          + 0.8 * t
-          + torch.exp(-((t - 0.6) / 0.05) ** 2)
+          + 2.0 * t
+          + 1.0 * (t > 0.6).float()
           + 0.1 * torch.randn_like(t))
 
-cdp = ContinuousDictionaryPursuit(experiment_dir=None, atom_types=[SineAtom, LinearAtom, GaussianAtom])
+cdp = ContinuousDictionaryPursuit(experiment_dir=None, atom_types=[SineAtom, LinearAtom, StepAtom])
 cdp.fit(t, signal, n_atoms=3, scout_batch_size=10, scout_epochs=5, global_epochs=100)
 print(cdp)
 
